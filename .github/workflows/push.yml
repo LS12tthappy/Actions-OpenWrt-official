@@ -13,6 +13,7 @@ jobs:
     env:
       VERSION: 18.06.5
       URL: https://github.com/openwrt/openwrt/archive/v18.06.5.tar.gz
+      GITHUB_TOKEN: ${{ secrets.RELEASES_DEPLOY_TOKEN }}
     
     steps:
     - name: Checkout - clone repository
@@ -20,8 +21,8 @@ jobs:
     
     - name: Install - system build dependencies
       run: |
-        apt update && apt upgrade -y
-        sudo apt install asciidoc binutils subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc zip
+        sudo -E apt update && sudo -E apt upgrade -y
+        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
     
     - name: Download - openwrt source download
       run: |
