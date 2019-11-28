@@ -19,7 +19,9 @@ jobs:
       uses: actions/checkout@v1
     
     - name: Install - system build dependencies
-      run: sudo apt install asciidoc binutils subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc zip
+      run: |
+        apt update && apt upgrade -y
+        sudo apt install asciidoc binutils subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc zip
     
     - name: Download - openwrt source download
       run: |
