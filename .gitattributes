@@ -1,0 +1,2 @@
+*.yml linguist-language=shell
+*.5 linguist-language=shell
