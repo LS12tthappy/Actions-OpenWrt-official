@@ -47,6 +47,9 @@ CONFIG_TARGET_x86=y
 # CONFIG_TARGET_ath79_generic is not set
 # CONFIG_TARGET_ath79_nand is not set
 # CONFIG_TARGET_ath79_tiny is not set
+# CONFIG_TARGET_sunxi_cortexa8 is not set
+# CONFIG_TARGET_sunxi_cortexa7 is not set
+# CONFIG_TARGET_sunxi_cortexa53 is not set
 # CONFIG_TARGET_x86_generic is not set
 # CONFIG_TARGET_x86_legacy is not set
 # CONFIG_TARGET_x86_geode is not set
@@ -204,6 +207,13 @@ CONFIG_TARGET_x86_64=y
 # CONFIG_TARGET_ath79_generic_DEVICE_devolo_dvl1750x is not set
 # CONFIG_TARGET_ath79_generic_DEVICE_etactica_eg200 is not set
 # CONFIG_TARGET_ath79_generic_DEVICE_jjplus_ja76pf2 is not set
+# CONFIG_TARGET_sunxi_cortexa8_Default is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun4i-a10-cubieboard is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun4i-a10-marsboard is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun4i-a10-pcduino is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun4i-a10-olinuxino-lime is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun5i-a13-olinuxino is not set
+# CONFIG_TARGET_sunxi_cortexa8_DEVICE_sun5i-a13-olimex-som is not set
 # CONFIG_TARGET_x86_generic_Generic is not set
 CONFIG_TARGET_x86_64_Generic=y
 CONFIG_HAS_SUBTARGETS=y
@@ -277,7 +287,13 @@ CONFIG_TARGET_ROOTFS_TARGZ=y
 #
 # Root filesystem images
 #
-# CONFIG_TARGET_ROOTFS_EXT4FS is not set
+CONFIG_TARGET_ROOTFS_EXT4FS=y
+CONFIG_TARGET_EXT4_RESERVED_PCT=0
+CONFIG_TARGET_EXT4_BLOCKSIZE_4K=y
+# CONFIG_TARGET_EXT4_BLOCKSIZE_2K is not set
+# CONFIG_TARGET_EXT4_BLOCKSIZE_1K is not set
+CONFIG_TARGET_EXT4_BLOCKSIZE=4096
+# CONFIG_TARGET_EXT4_JOURNAL is not set
 CONFIG_TARGET_ROOTFS_SQUASHFS=y
 CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
 CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
@@ -4741,7 +4757,7 @@ CONFIG_LUCI_LANG_zh-cn=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
 CONFIG_PACKAGE_luci-theme-material=y
 CONFIG_PACKAGE_luci-theme-openwrt=y
-CONFIG_PACKAGE_luci-theme-rosy=y
+# CONFIG_PACKAGE_luci-theme-rosy is not set
 
 #
 # 5. Protocols
