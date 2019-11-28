@@ -1,0 +1,75 @@
+name: OpenWrt-official CI
+on:
+  release:
+    types: [published]
+  
+  push:
+    branches: 
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    
+    env:
+      VERSION: 18.06.5
+      URL: https://github.com/openwrt/openwrt/archive/v18.06.5.tar.gz
+    
+    steps:
+    - name: Checkout - clone repository
+      uses: actions/checkout@v1
+    
+    - name: Install - system build dependencies
+      run: sudo apt install asciidoc binutils subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc zip
+    
+    - name: Download - openwrt source download
+      run: |
+        wget $URL
+        tar -zxf v$VERSION.tar.gz
+        
+    - name: Update - openwrt source update
+      run: |
+        cd openwrt-$VERSION
+        ./scripts/feeds update -a
+
+    - name: Install - openwrt source install
+      run: |
+        cd openwrt-$VERSION
+        ./scripts/feeds install -a
+
+    - name: Clone - openwrt plugin source
+      run: |
+        cd openwrt-$VERSION
+        git clone -b openwrt-18.06 https://github.com/rosywrt/luci-theme-rosy.git package/luci-theme-rosy
+    
+    - name: Config - copy build config
+      run: cp ./.config.18.06.5 openwrt-$VERSION/.config
+
+    - name: Download - openwrt build dependencies
+      run: |
+        cd openwrt-$VERSION
+        make download -j8
+
+    - name: Build - make openwrt source
+      run: |
+        cd openwrt-$VERSION
+        make -j$(nproc) V=s
+
+    - name: Remove - delete packages files
+      run: |
+        cd openwrt-$VERSION/bin/targets/x86/64/
+        rm -rf packages/
+        ls -hl
+
+    - name: Release - push to release file
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: openwrt-${{ env.VERSION }}/bin/targets/x86/64/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASES_DEPLOY_TOKEN }}
+
+    - name: Upload - push to artifact file
+      uses: actions/upload-artifact@v1
+      with:
+        name: openwrt-x86_64
+        path: openwrt-${{ env.VERSION }}/bin/targets/x86/64/
